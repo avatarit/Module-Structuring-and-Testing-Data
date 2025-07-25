@@ -15,12 +15,51 @@ To be valid, a password must:
 You must breakdown this problem in order to solve it. Find one test case first and get that working
 */
 const isValidPassword = require("./password-validator");
-test("password has at least 5 characters", () => {
-    // Arrange
-    const password = "12345";
-    // Act
-    const result = isValidPassword(password);
-    // Assert
-    expect(result).toEqual(true);
-}
-);
+
+
+test("password has a unknown character", () => {
+  const password = "Mill3@";
+  const result = isValidPassword(password);
+  expect(result).toBe(false);
+
+})
+
+ test("password has at least 5 characters", () => {
+  expect(isValidPassword("12345")).toBe(false);// Fails because no letters or special chars
+  expect(isValidPassword("Ab1!")).toBe(false); // Fails because the password is less than 5 characters.
+});
+
+test("password has at least one uppercase letter", () => {
+  expect(isValidPassword("password1!")).toBe(false); // No uppercase letter
+});
+
+test("password has at least one lowercase letter", () => {
+  expect(isValidPassword("PASSWORD1!")).toBe(false); // No lowercase letter
+});
+
+test("password has at least one number", () => {
+  expect(isValidPassword("Password!")).toBe(false); // No number
+});
+
+test("password has at least one special character", () => {
+  expect(isValidPassword("Password1")).toBe(false); // No special character
+});
+
+
+test("valid password", () => {
+  expect(isValidPassword("Valid1!")).toBe(true); // Meets all conditions
+  expect(isValidPassword("Valid1!")).toBe(false); // Used before
+});
+
+test("password should not be a previously used password", () => {
+  expect(isValidPassword("Mill3*")).toBe(false); // banned password
+});
+
+
+// test("valid password", () => {
+//   expect(isValidPassword("Mil2!")).toBe(true); // Meets all conditions
+// });
+
+// test("password should not be a previously used password", () => {
+//   expect(isValidPassword("Mil2!")).toBe(false); // Used before
+// });
